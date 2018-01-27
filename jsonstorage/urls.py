@@ -22,5 +22,6 @@ from core import views as coreviews
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     
-    url(r'^storage/:application/:collection', coreviews.post_data),
+    url(r'^storage/<str:application>/<str:collection>', coreviews.post_data),
+    url(r'^storage/<str:application>/<str:collection>/<str:indent>', coreviews.post_data),
 ]
