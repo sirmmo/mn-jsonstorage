@@ -1,0 +1,4 @@
+Django==1.9
+djangorestframework==3.7.7
+lpthw.web==1.1
+pymongo==3.6.0
