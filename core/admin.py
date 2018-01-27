@@ -4,5 +4,8 @@ from django.contrib import admin
 
 from .models import *
 
-admin.site.register(Application)
+class ApplicationAdmin(admin.ModelAdmin):
+    readonly_fields=('secret',)
+
+admin.site.register(Application, ApplicationAdmin)
 admin.site.register(Collection)
