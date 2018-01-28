@@ -5,11 +5,12 @@ from django.http import HttpResponseForbidden
 
 from pymongo import MongoClient
 from bson.objectid import ObjectId
-
+from django.views.decorators.csrf import csrf_exempt
 from core.models import *
 
 import os
 
+@csrf_exempt
 def post_data(request,application,collection):
     auth = request.META.get("HTTP_MN_JSONSTORAGE_SECRET")
     if not auth:
@@ -42,7 +43,7 @@ def get_data(request,application,collection,ident):
     
     client = MongoClient(host=server, port=int(port), connect=True)
     
-    data = client[application][collection].find_one({"_id":ObjectId(ident)  })
+    data = client[application][collection].find_one({"_id":ObjectId(ident)}, {"_id":0})
     return HttpResponse(json.dumps(data))
         
 def get_data_list(request, application, collection):
