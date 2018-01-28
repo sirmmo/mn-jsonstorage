@@ -1,11 +1,13 @@
 from __future__ import unicode_literals
 
+from django.contrib.sites.models import Site
 from django.db import models
 import uuid
 
 # Create your models here.
 
 class Application(models.Model):
+    site = models.ForeignKey(Site)
     name = models.CharField(max_length=300)
     slug = models.SlugField(max_length=300)
     
