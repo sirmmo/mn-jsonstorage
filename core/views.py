@@ -13,7 +13,7 @@ def post_data(request,application,collection):
     auth = request.META.get("HTTP_MN_JSONSTORAGE_SECRET")
     if not auth:
         return HttpResponseForbidden()
-    if Application.objects.filter(slug=application, secret=auth).count() == 0:
+    if Application.objects.filter(slug=application, secret=auth, site=get_current_site(request)).count() == 0:
         return HttpResponseForbidden()
     if Collection.objects.filter(slug=collection, application__slug=application).count() == 0:
         return HttpResponseForbidden()
@@ -44,3 +44,5 @@ def get_data(request,application,collection,ident):
     data = client[application][collection].find_one({"_id":ObjectId(ident)  })
     return HttpResponse(json.dumps(data))
         
+def get_data_list(request, application, collection):
+    pass
