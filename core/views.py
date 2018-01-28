@@ -12,13 +12,13 @@ import os
 
 @csrf_exempt
 def post_data(request,application,collection):
-    auth = request.META.get("HTTP_MN_JSONSTORAGE_SECRET")
-    if not auth:
-        return HttpResponseForbidden()
-    if Application.objects.filter(slug=application, secret=auth).count() == 0:
-        return HttpResponseForbidden()
-    if Collection.objects.filter(slug=collection, application__slug=application).count() == 0:
-        return HttpResponseForbidden()
+    #auth = request.META.get("HTTP_MN_JSONSTORAGE_SECRET")
+    #if not auth:
+    #    return HttpResponseForbidden()
+    #if Application.objects.filter(slug=application, secret=auth).count() == 0:
+    #    return HttpResponseForbidden()
+    #if Collection.objects.filter(slug=collection, application__slug=application).count() == 0:
+    #    return HttpResponseForbidden()
     
     server = os.getenv("JSONSTORAGE_MONGODB_HOST", "localhost")
     port = os.getenv("JSONSTORAGE_MONGODB_PORT", "27017")
@@ -33,10 +33,10 @@ def post_data(request,application,collection):
         
 def get_data(request,application,collection,ident):
     c = Collection.objects.get(slug=collection, application__slug=application)
-    if c.private_get:
-        auth = request.META.get("HTTP_MN_JSONSTORAGE_SECRET")
-        if Application.objects.filter(slug=application, secret=auth).count() == 0:
-            return HttpResponseForbidden()
+    #if c.private_get:
+    #    auth = request.META.get("HTTP_MN_JSONSTORAGE_SECRET")
+    #    if Application.objects.filter(slug=application, secret=auth).count() == 0:
+    #        return HttpResponseForbidden()
             
     server = os.getenv("JSONSTORAGE_MONGODB_HOST", "localhost")
     port = os.getenv("JSONSTORAGE_MONGODB_PORT", "27017")
@@ -48,10 +48,10 @@ def get_data(request,application,collection,ident):
         
 def get_data_list(request, application, collection):
     c = Collection.objects.get(slug=collection, application__slug=application)
-    if c.private_get:
-        auth = request.META.get("HTTP_MN_JSONSTORAGE_SECRET")
-        if Application.objects.filter(slug=application, secret=auth).count() == 0:
-            return HttpResponseForbidden()
+    #if c.private_get:
+    #    auth = request.META.get("HTTP_MN_JSONSTORAGE_SECRET")
+    #    if Application.objects.filter(slug=application, secret=auth).count() == 0:
+    #        return HttpResponseForbidden()
     
     if c.queryable:
         filters = json.loads(request.GET.get("filter"))
