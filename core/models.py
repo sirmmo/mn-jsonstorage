@@ -17,6 +17,7 @@ class Application(models.Model):
         return self.name
         
 class Collection(models.Model):
+    application = models.ForeignKey(Application, related_name="collections")
     name = models.CharField(max_length=300)
     slug = models.SlugField(max_length=300)
     
