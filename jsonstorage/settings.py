@@ -131,3 +131,5 @@ from corsheaders.defaults import default_headers
 CORS_ALLOW_HEADERS = default_headers + (
     'MN_JSONSTORAGE_SECRET',
 )
+
+SITE_ID = 1
