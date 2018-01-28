@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from django.http import HttpResponseForbidden
+from django.http import HttpResponseForbidden, HttpResponse
 # Create your views here.
 
 from pymongo import MongoClient
@@ -31,7 +31,7 @@ def post_data(request,application,collection):
     body = json.loads(body_unicode)
     
     i = client[application][collection].insert_one(body)
-    return HttpResponse(i.inserted_id)
+    return HttpResponse(json.dumps(str(i.inserted_id)))
         
 def get_data(request,application,collection,ident):
     c = Collection.objects.get(slug=collection, application__slug=application)
