@@ -22,6 +22,7 @@ from core import views as coreviews
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     
-    url(r'^storage/(?P<application>\w+)/(?P<collection>\w+)', coreviews.post_data),
-    url(r'^storage/(?P<application>\w+)/(?P<collection>\w+)/(?P<ident>\w+)', coreviews.post_data),
+    url(r'^storage/(?P<application>\w+)/(?P<collection>\w+)$', coreviews.post_data),
+    url(r'^storage/(?P<application>\w+)/(?P<collection>\w+)/(?P<ident>\w+)$', coreviews.get_data),
+    url(r'^storage/(?P<application>\w+)/(?P<collection>\w+)/list$', coreviews.get_data_list),
 ]
