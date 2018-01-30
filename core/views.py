@@ -29,8 +29,11 @@ def post_data(request,application,collection):
     
     body_unicode = request.body.decode('utf-8')
     body = json.loads(body_unicode)
+    db = client[application]
+    cl = db[collection]
     
-    i = client[application][collection].insert_one(body)
+    i = cl.insert_one(body)
+    
     return HttpResponse(json.dumps(str(i.inserted_id)))
         
 def get_data(request,application,collection,ident):
@@ -45,7 +48,10 @@ def get_data(request,application,collection,ident):
     
     client = MongoClient(host=server, port=int(port), connect=True)
     
-    data = client[application][collection].find_one({"_id":ObjectId(ident)}, {"_id":0})
+    db = client[application]
+    cl = db[collection]
+    
+    data = cl.find_one({"_id": ObjectId(ident)}, {"_id": 0})
     return HttpResponse(json.dumps(data))
         
 def get_data_list(request, application, collection):
@@ -63,6 +69,9 @@ def get_data_list(request, application, collection):
     
     client = MongoClient(host=server, port=int(port), connect=True)
     
-    data = client[application][collection].find(filters, {"_id": 0})
+    db = client[application]
+    cl = db[collection]
+    
+    data = cl.find(filters, {"_id": 0})
     l_data = list(data)
     return HttpResponse(json.dumps(l_data))
