@@ -56,7 +56,7 @@ def get_data_list(request, application, collection):
     #        return HttpResponseForbidden()
     
     if c.queryable:
-        filters = json.loads(request.GET.get("filter"))
+        filters = json.loads(request.GET.get("filter", "{}"))
             
     server = os.getenv("JSONSTORAGE_MONGODB_HOST", "localhost")
     port = os.getenv("JSONSTORAGE_MONGODB_PORT", "27017")
@@ -64,4 +64,5 @@ def get_data_list(request, application, collection):
     client = MongoClient(host=server, port=int(port), connect=True)
     
     data = client[application][collection].find(filters, {"_id": 0})
-    return HttpResponse(json.dumps(data))
+    l_data = list(data)
+    return HttpResponse(json.dumps(l_data))

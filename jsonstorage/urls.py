@@ -25,4 +25,5 @@ urlpatterns = [
     url(r'^storage/(?P<application>\w+)/(?P<collection>\w+)$', coreviews.post_data),
     url(r'^storage/(?P<application>\w+)/(?P<collection>\w+)/(?P<ident>\w+)$', coreviews.get_data),
     url(r'^list/(?P<application>\w+)/(?P<collection>\w+)', coreviews.get_data_list),
+    url(r'^setup/(?P<application>\w+)/(?P<collection>\w+)', coreviews.get_data_list),
 ]
