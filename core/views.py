@@ -52,6 +52,7 @@ def get_data(request,application,collection,ident):
     cl = db[collection]
     
     data = cl.find_one({"_id": ObjectId(ident)}, {"_id": 0})
+    data["id"] = ident
     return HttpResponse(json.dumps(data))
         
 def get_data_list(request, application, collection):
