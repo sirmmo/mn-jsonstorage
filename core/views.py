@@ -73,6 +73,9 @@ def get_data_list(request, application, collection):
     db = client[application]
     cl = db[collection]
     
-    data = cl.find(filters, {"_id": 0})
+    data = cl.find(filters)
     l_data = list(data)
+    for d in l_data:
+        d["id"] = str(d["_id"])
+        del d["_id"]
     return HttpResponse(json.dumps(l_data))
