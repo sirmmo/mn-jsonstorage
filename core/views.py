@@ -64,6 +64,8 @@ def get_data_list(request, application, collection):
     
     if c.queryable:
         filters = json.loads(request.GET.get("filter", "{}"))
+    else:
+        filters = {}
             
     server = os.getenv("JSONSTORAGE_MONGODB_HOST", "localhost")
     port = os.getenv("JSONSTORAGE_MONGODB_PORT", "27017")
