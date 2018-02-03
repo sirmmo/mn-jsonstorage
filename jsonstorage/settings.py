@@ -124,10 +124,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-CORS_ORIGIN_ALLOW_ALL = True
-
 from corsheaders.defaults import default_headers
-
+CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_HEADERS = default_headers + (
     'MN_JSONSTORAGE_SECRET',
 )

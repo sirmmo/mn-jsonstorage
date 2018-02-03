@@ -79,3 +79,25 @@ def get_data_list(request, application, collection):
         d["id"] = str(d["_id"])
         del d["_id"]
     return HttpResponse(json.dumps(l_data))
+    
+def delete_data_list(request, application, collection):
+    filters = json.loads(request.GET.get("filter", "{}"))
+    #auth = request.META.get("HTTP_MN_JSONSTORAGE_SECRET")
+    #if Application.objects.filter(slug=application, secret=auth).count() == 0:
+    #    return HttpResponseForbidden()
+        
+    server = os.getenv("JSONSTORAGE_MONGODB_HOST", "localhost")
+    port = os.getenv("JSONSTORAGE_MONGODB_PORT", "27017")
+    
+    client = MongoClient(host=server, port=int(port), connect=True)
+    
+    db = client[application]
+    cl = db[collection]
+    
+    data = cl.remove(filters)
+    l_data = list(data)
+    for d in l_data:
+        d["id"] = str(d["_id"])
+        del d["_id"]
+        
+    return HttpResponse(json.dumps("OK"))
