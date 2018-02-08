@@ -96,6 +96,10 @@ def delete_data_list(request, application, collection):
     db = client[application]
     cl = db[collection]
     
+    print filters
+    if "_id" in filters:
+        filters["_id"] = ObjectId(filters["_id"])
+    
     data = cl.remove(filters)
         
     return HttpResponse(json.dumps("OK"))
