@@ -11,6 +11,8 @@ from core.models import *
 import json
 
 import os
+from django_eventstream import send_event
+
 
 @csrf_exempt
 def post_data(request,application,collection):
@@ -32,8 +34,15 @@ def post_data(request,application,collection):
     db = client[application]
     cl = db[collection]
     
+    if "id" in body:
+        old_id = body.get("id")
+        cl.update_one({"_id":old_id}, {"$set":{"__deleted__":"true"}})
+        body["__previous_id__"] = old_id
+    
     i = cl.insert_one(body)
     
+    send_event(application, 'added', body)
+
     return HttpResponse(json.dumps(str(i.inserted_id)))
         
 def get_data(request,application,collection,ident):
@@ -67,6 +76,8 @@ def get_data_list(request, application, collection):
     else:
         filters = {}
             
+    filters["__deleted__"] = False
+    
     server = os.getenv("JSONSTORAGE_MONGODB_HOST", "localhost")
     port = os.getenv("JSONSTORAGE_MONGODB_PORT", "27017")
     
@@ -101,5 +112,7 @@ def delete_data_list(request, application, collection):
         filters["_id"] = ObjectId(filters["_id"])
     
     data = cl.remove(filters)
+    
+    send_event(application, 'deleted', {})
         
     return HttpResponse(json.dumps("OK"))

@@ -14,10 +14,12 @@ Including another URLconf
     2. Import the include() function: from django.conf.urls import url, include
     3. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.contrib import admin
 
 from core import views as coreviews
+
+import django_eventstream
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -27,4 +29,10 @@ urlpatterns = [
     url(r'^list/(?P<application>\w+)/(?P<collection>\w+)', coreviews.get_data_list),
     url(r'^delete/(?P<application>\w+)/(?P<collection>\w+)', coreviews.delete_data_list),
     url(r'^setup/(?P<application>\w+)/(?P<collection>\w+)', coreviews.get_data_list),
+    
+    # client selects the channels using query parameters:
+    url(r'^events/', include(django_eventstream.urls)),
+    
+    # client selects a single channel using a path component
+    url(r'^events/(?P<channel>\w+)/', include(django_eventstream.urls)),
 ]
