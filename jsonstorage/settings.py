@@ -133,3 +133,5 @@ CORS_ALLOW_HEADERS = default_headers + (
 )
 
 SITE_ID = 1
+
+GRIP_URL = 'http://pushpin:5561'

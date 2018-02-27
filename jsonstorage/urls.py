@@ -29,6 +29,8 @@ urlpatterns = [
     url(r'^list/(?P<application>\w+)/(?P<collection>\w+)', coreviews.get_data_list),
     url(r'^delete/(?P<application>\w+)/(?P<collection>\w+)', coreviews.delete_data_list),
     url(r'^setup/(?P<application>\w+)/(?P<collection>\w+)', coreviews.get_data_list),
+    url(r'^describe/(?P<application>\w+)/(?P<collection>\w+)', coreviews.describe),
+    url(r'^describe_list/(?P<application>\w+)/(?P<collection>\w+)', coreviews.describe_list),
     
     # client selects the channels using query parameters:
     url(r'^events/', include(django_eventstream.urls)),
