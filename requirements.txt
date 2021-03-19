@@ -6,7 +6,7 @@ chardet==3.0.4
 django-cors-headers==2.1.0
 django-eventstream==2.0.0
 django-grip==1.8.0
-djangorestframework==3.7.7
+djangorestframework==3.11.2
 gripcontrol==3.2.1
 idna==2.6
 lpthw.web==1.1
